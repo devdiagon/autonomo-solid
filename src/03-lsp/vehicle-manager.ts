@@ -28,6 +28,11 @@ export class Ford implements Vehicle {
     getDetails() { return `Ford Model: ${this.model} — Built Tough`; }
 }
 
+export class Dron implements Vehicle {
+    constructor(public model: string) {}
+    getDetails() { return `Dron Model: ${this.model} — Vuelo autónomo`; }
+}
+
 export class VehicleManager {
 
     static printVehicleDetails(vehicles: Vehicle[]) {
