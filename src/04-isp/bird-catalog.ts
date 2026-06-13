@@ -1,39 +1,23 @@
+interface Eater  { eat(): void; }
+interface Flyer  { fly(): void; }
+interface Swimmer { swim(): void; }
 
-/**
- * VIOLACIÓN AL PRINCIPIO DE SEGREGACIÓN DE INTERFAZ (ISP)
- * 
- * El catálogo de fauna define una interfaz "gorda" que obliga a las aves 
- * a implementar métodos que no les corresponden según su naturaleza.
- */
-
-interface Bird {
-    eat(): void;
-    fly(): void;
-    swim(): void;
+export class Toucan implements Eater, Flyer {
+    eat() { console.log('El Tucán está comiendo frutas.'); }
+    fly() { console.log('El Tucán vuela sobre la selva.'); }
 }
 
-export class Toucan implements Bird {
-    public eat() { console.log('El Tucán está comiendo frutas.'); }
-    public fly() { console.log('El Tucán vuela sobre la selva.'); }
-    public swim() { console.log('El Tucán no suele nadar, pero implemento el método vacío.'); }
+export class Hummingbird implements Eater, Flyer {
+    eat() { console.log('El Colibrí busca néctar.'); }
+    fly() { console.log('El Colibrí aletea rápidamente.'); }
 }
 
-export class Hummingbird implements Bird {
-    public eat() { console.log('El Colibrí busca néctar.'); }
-    public fly() { console.log('El Colibrí aletea rápidamente.'); }
-    public swim() { throw new Error('Un colibrí no puede nadar'); }
+export class Ostrich implements Eater, Swimmer {
+    eat()  { console.log('El Avestruz come hierbas.'); }
+    swim() { console.log('El Avestruz puede nadar si es necesario.'); }
 }
 
-/**
- * VIOLACIÓN FLAGRANTE: El Avestruz es un ave, pero NO VUELA.
- * La interfaz Bird le obliga a implementar fly(), causando una excepción en tiempo de ejecución
- * o un comportamiento inesperado.
- */
-export class Ostrich implements Bird {
-    public eat() { console.log('El Avestruz come hierbas.'); }
-    public fly() { 
-        // ¡Error! Violación de ISP.
-        throw new Error('Las avestruces NO vuelan.'); 
-    }
-    public swim() { console.log('El Avestruz puede nadar si es necesario.'); }
+export class Penguin implements Eater, Swimmer {
+    eat()  { console.log('El Pingüino come peces.'); }
+    swim() { console.log('El Pingüino nada con gran habilidad.'); }
 }
