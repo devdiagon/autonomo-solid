@@ -123,3 +123,17 @@ Esto evita confusión por parte del desarrollador, puesto que no tiene que estar
 `PostService` instancia directamente `new LocalDatabaseService()` dentro de su método `getPosts()`. El módulo de alto nivel queda acoplado a la implementación concreta de bajo nivel: no existe ninguna abstracción (interfaz) entre ambos. Cambiar el proveedor de datos por `JsonDatabaseService` —o por cualquier otro— exige modificar `PostService`, lo que va en contra del principio que indica que los módulos deben depender de abstracciones y no de concreciones.
 
 ### Después
+
+**Archivos:** `src/data/local-database.ts`, `src/05-dip/post-service.ts`
+
+Se definió la interfaz `DatabaseProvider` con el método `getFakePosts()`. Tanto `LocalDatabaseService` como `JsonDatabaseService` la implementan, con lo que ambas quedan intercambiables desde el punto de vista de `PostService`.
+
+`PostService` recibe un `DatabaseProvider` por constructor y nunca menciona ninguna implementación concreta. El módulo de alto nivel depende únicamente de la abstracción; los módulos de bajo nivel dependen de ella también. Cambiar de proveedor solo requiere de pasar una instancia distinta al constructor, sin tocar directamente el servicio.
+
+### Reflexión
+
+**¿Qué tan fácil es inyectar un "MockDatabase" para pruebas unitarias ahora?**
+
+Basta con crear una clase `MockDatabase` que implemente `DatabaseProvider` y devuelva datos controlados por la interfaz del modelo de tipo `Post`. Esto ayuda a mantener consistencia en cuanto al tipo de salida que se devolvería sin que el proveedor sea trivial. Así solo se instanciaría `new PostService(new MockDatabase())` en el test, sin ningún cambio en `PostService`.
+
+Antes era imposible sin editar el propio servicio, ya que la dependencia estaba instanciada dentro del método. Con DIP, el servicio queda completamente aislado de sus proveedores, lo que hace que las pruebas sean predecibles, rápidas y sin efectos secundarios.
