@@ -69,6 +69,20 @@ Las clases `Tesla`, `Audi`, `Toyota`, `Honda` y `Ford` no comparten ninguna inte
 
 ### Después
 
+**Archivo:** `src/03-lsp/vehicle-manager.ts`
+
+Se definió la interfaz `Vehicle` con dos características: el atributo `model` y el método `getDetails()`. Cada marca implementa ese contrato devolviendo su propio mensaje desde `getDetails()`, sin que ningún código externo necesite saber de qué clase concreta se trata.
+
+`VehicleManager.printVehicleDetails` ahora acepta un array de la abstracción de vehículo con `Vehicle[]`. Con esto simplemente se llama a `vehicle.getDetails()` en cada elemento para mostrar el mensaje correspondiente como antes. Cualquier clase que implemente `Vehicle` puede sustituir a cualquier otra sin modificar el manager.
+
+### Reflexión
+
+**Si la reserva adquiere un "Dron", ¿podría tu manager procesarlo sin añadir nuevos *if/else*?**
+
+Gracias a la abstracción común mediante `Vehicle` es posible agregar cuantos más tipos de vehículos se necesite siempre y cuando se siga la misma interfaz. A la final `VehicleManager` hace uso de la implementación elaborada por cada vehículo sin necesidad de que sepa explícitamente de cuál vehículo se trata.
+
+En este caso se podría especificar el método de `getDetails()` en la clase `Dron` siguiendo el formato de los otros vehículos: mencionar su modelo y luego una característica representativa del dron dentro del mensaje.
+
 ---
 
 ## 4. ISP — Interface Segregation Principle
