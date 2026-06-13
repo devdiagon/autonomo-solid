@@ -10,3 +10,10 @@ export class AxiosAdapter implements HttpAdapter {
         return resp.data;
     }
 }
+
+export class FetchAdapter implements HttpAdapter {
+    async get<T>(url: string): Promise<T> {
+        const resp = await fetch(url);
+        return resp.json() as Promise<T>;
+    }
+}
