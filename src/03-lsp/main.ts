@@ -9,4 +9,8 @@ const fleet = [
     new Dron('X7-Frederick_Tipan'),
 ];
 
+console.group("03-LSP")
+
 VehicleManager.printVehicleDetails(fleet);
+
+console.groupEnd()
