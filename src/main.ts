@@ -1,4 +1,5 @@
 import './style.css'
+import './01-srp/main'
 
 const app = document.querySelector<HTMLDivElement>('#app')!
 
