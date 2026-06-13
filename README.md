@@ -41,6 +41,22 @@ Con esto, se concluye que, si bien en ambos casos se modifica una sola clase, al
 
 ### Después
 
+**Archivos:** `src/02-ocp/http-adapter.ts`, `src/02-ocp/news-service.ts`
+
+Se introdujo la interfaz `HttpAdapter` con un único método `get<T>()`. A partir de ella se crearó la implementación de axios existente:
+
+- `AxiosAdapter` — envuelve `axios.get()`
+
+`NewsService` y `PhotosService` reciben un `HttpAdapter` por constructor y nunca mencionan `axios` explícitamente. De esta manera se respeta el principo de Open/Closed.
+
+### Reflexión
+
+**Si se detecta una vulnerabilidad en axios y debes migrar a fetch en minutos, ¿qué tan rápido lo harías con este diseño?**
+
+Al tener desacoplado el método concreto para hacer una consulta http, solo basta con crear un nuevo adapter, como `FetchAdapter` que implemente la misma interfaz de `HttpAdapter`. Luego simplemente se intercambia en el servicio cuyo constructor recibe un objeto del tipo `HttpAdapter`.
+
+De esta manera el cambio es sumamente cómodo de realizar, a parte de que es menos propenso de tener errores secundarios tras realizar el cambio. Lo único que define que tanto se demora en efectuar el cambio viene dado por el grado de complejidad de implementar la interfaz con el nuevo adaptador desarrollado.
+
 ---
 
 ## 3. LSP — Liskov Substitution Principle
