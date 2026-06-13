@@ -16,3 +16,8 @@ export class Ostrich implements Eater, Swimmer {
     eat()  { console.log('El Avestruz come hierbas.'); }
     swim() { console.log('El Avestruz puede nadar si es necesario.'); }
 }
+
+export class Penguin implements Eater, Swimmer {
+    eat()  { console.log('El Pingüino come peces.'); }
+    swim() { console.log('El Pingüino nada con gran habilidad.'); }
+}
