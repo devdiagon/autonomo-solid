@@ -1,4 +1,4 @@
-# Bitácora de Principios SOLID
+# Bitácora de Reflexión - Frederick Tipán
 
 ## 1. SRP — Single Responsibility Principle
 
