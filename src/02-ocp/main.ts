@@ -1,16 +1,17 @@
 import { AxiosAdapter, FetchAdapter } from './http-adapter';
 import { NewsService, PhotosService } from './news-service';
 
-const httpAxios = new AxiosAdapter();
-const httpFetch = new FetchAdapter();
+(async () => {
+    const newsService   = new NewsService(new AxiosAdapter());
+    const photosService = new PhotosService(new FetchAdapter());
 
-const newsService = new NewsService(httpAxios);
-const photosService = new PhotosService(httpFetch);
+    const [news, photos] = await Promise.all([
+        newsService.getLatestNews(),
+        photosService.getGallery(),
+    ]);
 
-newsService.getLatestNews().then(news => {
+    console.group('02-OCP');
     console.log('Últimas noticias (primeras 3):', (news as any[]).slice(0, 3));
-});
-
-photosService.getGallery().then(photos => {
     console.log('Galería de fotos (primeras 3):', (photos as any[]).slice(0, 3));
-});
+    console.groupEnd();
+})();
