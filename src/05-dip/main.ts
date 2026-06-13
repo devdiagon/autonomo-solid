@@ -1,13 +1,14 @@
 import { LocalDatabaseService, JsonDatabaseService } from '../data/local-database';
 import { PostService } from './post-service';
 
-const localService = new PostService(new LocalDatabaseService());
-const jsonService  = new PostService(new JsonDatabaseService());
+(async () => {
+    const [localPosts, jsonPosts] = await Promise.all([
+        new PostService(new LocalDatabaseService()).getPosts(),
+        new PostService(new JsonDatabaseService()).getPosts(),
+    ]);
 
-localService.getPosts().then(posts => {
-    console.log('Posts desde LocalDatabase:', posts);
-});
-
-jsonService.getPosts().then(posts => {
-    console.log('Posts desde JsonDatabase:', posts);
-});
+    console.group('05-DIP');
+    console.log('Posts desde LocalDatabase:', localPosts);
+    console.log('Posts desde JsonDatabase:', jsonPosts);
+    console.groupEnd();
+})();

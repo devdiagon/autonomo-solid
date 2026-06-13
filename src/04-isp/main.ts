@@ -5,6 +5,8 @@ const hummingbird = new Hummingbird();
 const ostrich     = new Ostrich();
 const penguin     = new Penguin();
 
+console.group("04-ISP")
+
 toucan.eat();
 toucan.fly();
 
@@ -16,3 +18,5 @@ ostrich.swim();
 
 penguin.eat();
 penguin.swim();
+
+console.groupEnd()
