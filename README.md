@@ -95,6 +95,23 @@ La interfaz `Bird` obliga a todas las aves a implementar `eat()`, `fly()` y `swi
 
 ### Después
 
+**Archivo:** `src/04-isp/bird-catalog.ts`
+
+La interfaz `Bird` se segregó en tres contratos independientes: `Eater`, `Flyer` y `Swimmer`. Cada ave implementa únicamente las capacidades que le corresponden:
+
+- `Toucan` y `Hummingbird` implementan `Eater` + `Flyer` — comen y vuelan.
+- `Ostrich` implementa `Eater` + `Swimmer` — come y nada, pero nunca declara `fly()`.
+
+Ninguna clase depende de métodos que no puede o no debe ejecutar.
+
+### Reflexión
+
+**¿Cómo evita tu diseño que un "Pingüino" tenga un método fly() que lance errores?**
+
+Dado que se tienen varias clases con una capacidad específica, el pingüino solo implementaría las clases que tendría sentido, en este caso: `Eater` + `Swimmer`. Al nunca haberle indicado que puede implementar la capcidad de volar, el método `fly()` no puede mandar errores porque en ningún momento fue necesario especificarlo de manera explícita.
+
+Esto evita confusión por parte del desarrollador, puesto que no tiene que estar agregando comportamientos inconsistentes entre distintas clases solo por tener que mantener un contrato rígido con una interfaz. 
+
 ---
 
 ## 5. DIP — Dependency Inversion Principle
