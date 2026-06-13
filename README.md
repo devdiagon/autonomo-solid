@@ -10,6 +10,25 @@
 
 ### Después
 
+**Archivo:** `src/01-srp/product-bloc.ts`
+
+Se extrajeron dos servicios especializados del `ProductBloc` original:
+
+- `ProductService` — única responsable de cargar y guardar productos.
+- `NotificationService` — única responsable del envío de notificaciones por correo.
+
+`ProductBloc` conserva su interfaz pública pero ahora delega cada operación al servicio correspondiente, recibiéndolos por inyección de dependencias en el constructor. Cada clase tiene una sola razón para cambiar.
+
+### Reflexión
+
+**¿Qué pasaría si mañana decidimos notificar por WhatsApp en lugar de Email? ¿Cuántas clases tendrías que modificar ahora vs. antes?**
+
+Agregar un nuevo servicio conlleva a que se tiene que agregarlo dentro de la clase que gestiona las notificaciones. **Anteriormente**, esto estaba dado por la clase `ProductBloc`, en la cual también se involucraba lógica de negocio (en este caso productos) que no tenía nada que ver con el sistema de notificaciones. De esta manera se corría el riesgo de afectar al servicio de productos al intentar cambiar solo las notificaciones.
+
+En cambio **ahora**, al tener separados los servicios, solo se tiene que modificar `NotificationService`, por lo que el resto de servicios relacionados con producto NO se verían afectados.
+
+Con esto, se concluye que, si bien en ambos casos se modifica una sola clase, al tener el principio de SRP se corre menos riesgo de afectar indirectamente a otros servicios que no necesariamente debería verse afectados, pues cada clase tiene una única responsabilidad.
+
 ---
 
 ## 2. OCP — Open/Closed Principle
