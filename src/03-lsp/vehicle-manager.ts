@@ -1,46 +1,41 @@
+export interface Vehicle {
+    model: string;
+    getDetails(): string;
+}
 
-/**
- * VIOLACIÓN AL PRINCIPIO DE SUSTITUCIÓN DE LISKOV (LSP)
- * 
- * En la flota de la reserva, intentamos manejar diversos vehículos.
- * Sin embargo, el cliente se ve obligado a conocer los detalles internos
- * de cada marca para poder operar, rompiendo la transparencia de la abstracción.
- */
+export class Tesla implements Vehicle {
+    constructor(public model: string) {}
+    getDetails() { return `Tesla Model: ${this.model} — Carga eléctrica al 100%`; }
+}
 
-export class Tesla { constructor(public model: string) {} }
-export class Audi  { constructor(public model: string) {} }
-export class Toyota{ constructor(public model: string) {} }
-export class Honda { constructor(public model: string) {} }
-export class Ford  { constructor(public model: string) {} }
+export class Audi implements Vehicle {
+    constructor(public model: string) {}
+    getDetails() { return `Audi Model: ${this.model} — Tracción Quattro activada`; }
+}
+
+export class Toyota implements Vehicle {
+    constructor(public model: string) {}
+    getDetails() { return `Toyota Model: ${this.model} — Motor híbrido listo`; }
+}
+
+export class Honda implements Vehicle {
+    constructor(public model: string) {}
+    getDetails() { return `Honda Model: ${this.model} — VTEC activado`; }
+}
+
+export class Ford implements Vehicle {
+    constructor(public model: string) {}
+    getDetails() { return `Ford Model: ${this.model} — Built Tough`; }
+}
+
+export class Dron implements Vehicle {
+    constructor(public model: string) {}
+    getDetails() { return `Dron Model: ${this.model} — Vuelo autónomo`; }
+}
 
 export class VehicleManager {
 
-    /**
-     * VIOLACIÓN: Este método rompe LSP y OCP. 
-     * Si agregamos una nueva marca (ej. Volvo), debemos venir aquí a agregar otro 'if' o 'case'.
-     * Además, no podemos tratar a todos los vehículos por igual.
-     */
-    static printVehicleDetails( vehicles: (Tesla | Audi | Toyota | Honda | Ford)[] ) {
-        
-        vehicles.forEach( vehicle => {
-
-            if( vehicle instanceof Tesla ) {
-                console.log('Tesla Model:', vehicle.model, 'Carga eléctrica al 100%');
-            }
-            if( vehicle instanceof Audi ) {
-                console.log('Audi Model:', vehicle.model, 'Tracción Quattro activada');
-            }
-            if( vehicle instanceof Toyota ) {
-                console.log('Toyota Model:', vehicle.model, 'Motor híbrido listo');
-            }
-            if( vehicle instanceof Honda ) {
-                console.log('Honda Model:', vehicle.model, 'VTEC activado');
-            }
-            if( vehicle instanceof Ford ) {
-                console.log('Ford Model:', vehicle.model, 'Built Tough');
-            }
-
-        });
+    static printVehicleDetails(vehicles: Vehicle[]) {
+        vehicles.forEach(vehicle => console.log(vehicle.getDetails()));
     }
-
 }
